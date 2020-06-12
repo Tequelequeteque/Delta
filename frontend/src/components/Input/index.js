@@ -13,9 +13,9 @@ export default function Input({ name, label, path, fileName, ...rest }) {
 
   const [defaultImage] = useState('http://localhost:3333/files/profile.jpg');
   const [src, setSrc] = useState(defaultImage);
+
   function handleAddImage({ target: { files } }) {
     const file = files[0];
-    console.log(file);
     if (!file || file.type !== 'image/jpeg') return;
     const reader = new FileReader();
 
@@ -23,10 +23,19 @@ export default function Input({ name, label, path, fileName, ...rest }) {
     reader.readAsDataURL(file);
   }
 
+  async function setImage() {
+    const urlImage = inputRef.current.getAttribute('value');
+    const res = await fetch(urlImage);
+    const blob = await res.blob();
+    const file = new File([blob], fileName || 'profile.jpg');
+    setSrc(urlImage);
+    handleAddImage({ target: { files: { '0': file } } });
+  }
+
   function handleRemoveImage() {
-    if (inputRef.current.value) {
-      inputRef.current.value = '';
-      setSrc(defaultImage);
+    if (inputRef.current) {
+      inputRef.current.setAttribute('value', defaultImage);
+      setImage();
     }
   }
 
@@ -36,29 +45,16 @@ export default function Input({ name, label, path, fileName, ...rest }) {
       ref: inputRef.current,
       path: path || 'value',
     });
-    if (rest.type === 'file' && defaultValue)
-      (async () => {
-        const res = await fetch(defaultValue);
-        const blob = await res.blob();
-        const file = new File([blob], fileName || 'profile.jpg');
-        handleAddImage({ target: { files: { '0': file } } });
-      })();
-  }, [
-    fieldName,
-    inputRef,
-    registerField,
-    defaultValue,
-    path,
-    rest.type,
-    fileName,
-  ]);
+    if (rest.type === 'file' && defaultValue) setImage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fieldName, inputRef, registerField, defaultValue]);
 
   return (
     <div className="item">
       {label && <label htmlFor={fieldName}>{label}</label>}
 
       <input
-        onChange={rest.type === 'file' ? handleAddImage : null}
+        onChange={rest.type === 'file' ? e => handleAddImage(e) : null}
         hidden={rest.type === 'file'}
         ref={inputRef}
         id={fieldName}
@@ -78,7 +74,7 @@ export default function Input({ name, label, path, fileName, ...rest }) {
             <button type="button" onClick={() => inputRef.current.click()}>
               Adicionar foto
             </button>
-            <button type="button" onClick={handleRemoveImage}>
+            <button type="button" onClick={() => handleRemoveImage()}>
               Remover foto
             </button>
           </div>

@@ -16,7 +16,7 @@ export default function() {
         toast.error(error);
       }
     })();
-  }, [pupils]);
+  }, []);
 
   async function handleDelete(id) {
     try {

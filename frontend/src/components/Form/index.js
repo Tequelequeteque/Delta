@@ -20,13 +20,7 @@ export default function FormPupil({ submitName, pageName, cb, data }) {
       <div className="split">
         <h1>{pageName}</h1>
       </div>
-      <Input
-        name="image"
-        type="file"
-        accept=".jpg"
-        path="files[0]"
-        fileName={data && data.image.path}
-      />
+      <Input name="image" type="file" accept=".jpg" path="files[0]" />
       <div className="split" />
       <div className="split" />
       <Input name="name" label="Nome" type="text" />

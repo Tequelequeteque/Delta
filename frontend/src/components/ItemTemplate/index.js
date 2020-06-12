@@ -5,7 +5,7 @@ import { Button } from 'primereact/button';
 
 export default function itemTemplate({ pupil, icon, cb }) {
   return (
-    <div className="row">
+    <div className="row" itemID={pupil.id}>
       <img
         className="photo"
         src={pupil.image.url}
