@@ -1,0 +1,22 @@
+ul {
+  list-style-type: none;
+  display: flex;
+  background: #fff;
+}
+ul > li {
+  transition: background 0.5s !important;
+  transition: color 0.5s !important;
+  width: fit-content;
+  padding: 20px;
+  cursor: pointer;
+}
+ul > li:hover {
+  background: #a191d6;
+}
+
+.active,
+.active:hover {
+  background: #7159c1 !important;
+  cursor: not-allowed;
+  color: #fff;
+}

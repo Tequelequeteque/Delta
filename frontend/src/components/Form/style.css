@@ -1,0 +1,31 @@
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  max-width: 900px;
+  margin: auto;
+}
+
+.split{
+  min-width: 100%;
+  text-align: center;
+}
+
+button {
+  display: block;
+  background: #111;
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+  border-radius: 4px;
+  width: auto;
+  padding: 16px;
+  font-weight: bold;
+  font-size: 15px;
+  transition: background-color 0.2s;
+  margin-bottom: 50px;
+}
+
+button:hover {
+  background-color: #000;
+}
